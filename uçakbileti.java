@@ -2,49 +2,37 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-        int age, yolculukTipi;
-        double kmFiyati = 0.10, normalTutar, km, ageIndirimi, ageIndirimTutari, indirimliTutar, yolculukTipiIndirimi, yolculukTipiIndirimOrani = 0.20, toplamTutar, ageIndirimOrani = 0.0;
+        System.out.print("Mesafe (KM): ");
+        int mesafe = scanner.nextInt();
 
+        System.out.print("Yaşınız: ");
+        int yas = scanner.nextInt();
 
-        Scanner input = new Scanner(System.in);
+        System.out.print("Yolculuk Tipi (1: Tek Yön, 2: Gidiş-Dönüş): ");
+        int yolculukTipi = scanner.nextInt();
 
-        System.out.print("Mesafeyi km türünden giriniz : ");
-        km = input.nextDouble();
+        if (mesafe <= 0 || yas <= 0 || (yolculukTipi != 1 && yolculukTipi != 2)) {
+            System.out.println("Hatalı Veri Girdiniz !");
+        } else {
+            double toplamFiyat = mesafe * 0.10; // Mesafe başına ücret 0,10 TL olarak belirlendi
 
-        System.out.print("Yaşınızı giriniz : ");
-        age = input.nextInt();
+            if (yas < 12) {
+                toplamFiyat *= 0.5; // 12 yaşından küçükse %50 indirim
+            } else if (yas >= 12 && yas <= 24) {
+                toplamFiyat *= 0.9; // 12-24 yaş arasındaysa %10 indirim
+            } else if (yas >= 65) {
+                toplamFiyat *= 0.7; // 65 yaşından büyükse %30 indirim
+            }
 
-        System.out.print("Yolculuk tipini giriniz : ");
-        yolculukTipi = input.nextInt();
+            if (yolculukTipi == 2) {
+                toplamFiyat = (toplamFiyat * 0.8) * 2; // Gidiş-Dönüş seçilmişse %20 indirim
+            }
 
-
-
-        normalTutar = km * kmFiyati;
-        ageIndirimi = normalTutar * ageIndirimOrani;
-        indirimliTutar = normalTutar - ageIndirimi;
-        yolculukTipiIndirimi = indirimliTutar * yolculukTipiIndirimOrani;
-        toplamTutar = 
-
-
-        if((age >=0) && (age < 12)){
-            ageIndirimOrani = 0.5;
-        }else if ((age >=12) && (age <=24)){
-            ageIndirimOrani = 0.10;
-        }else if(age > 65){
-            ageIndirimOrani = 0.30;
-        }
-        if (yolculukTipi == 1){
-        yolculukTipiIndirimi = 1;
-        }else if(yolculukTipi ==2){
-            yolculukTipiIndirimi = 0.20;
+            System.out.println("Toplam Bilet Fiyatı: " + toplamFiyat + " TL");
         }
 
-
-
-
-
-
-
+        scanner.close();
     }
 }
